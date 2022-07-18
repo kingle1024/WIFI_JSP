@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@page import="db.Member" %>
 <%@page import="java.util.List" %>
-<%@page import="db.MemberService" %>
+<%@ page import="db.History" %>
+<%@ page import="service.HistoryService" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,30 +14,31 @@
 <a href="hello-servlet">Hello Servlet</a>
 
 <%
-    String memberType = request.getParameter("memberType");
-    String userId = request.getParameter("userId");
-
-    MemberService memberService = new MemberService();
-    Member member = memberService.detail(memberType, userId);
-
+    HistoryService historyService = new HistoryService();
+    List<History> historyList = historyService.list();
+    int historySize = historyList.size();
 %>
-    <h1>회원 상세</h1>
+    <h1>위치 히스토리 목록</h1>
     <table>
-        <colgroup>
-            <col style="width: 20%;" />
-            <col style="width: 80%;" />
-        </colgroup>
-        <tbody>
+        <thead>
             <tr>
-                <th>회원구분</th>
-                <td><%=member.getMemberType()%></td>
-                <th>아이디</th>
-                <td><%=member.getUserId()%></td>
-                <th>비밀번호</th>
-                <td><%=member.getPassword()%></td>
-                <th>이름</th>
-                <td><%=member.getName()%></td>
+                <td>ID</td>
+                <td>X좌표</td>
+                <td>Y좌표</td>
+                <td>조회일자</td>
+                <td>비고</td>
             </tr>
+        </thead>
+        <tbody>
+        <% for (History h : historyList){ %>
+        <tr>
+            <td><%=historySize--%></td>
+            <td><%=h.getLAT()%></td>
+            <td><%=h.getLNT()%></td>
+            <td><%=h.getDate()%></td>
+        </tr>
+        <%}%>
+
         </tbody>
     </table>
     <div>
