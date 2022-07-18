@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
 
 <%@ page import="db.Wifi" %>
-<%@ page import="db.WifiService" %>
+<%@ page import="service.WifiService" %>
 <%
     WifiService wifiService = new WifiService();
     List<Wifi> wifiList = wifiService.list();
@@ -16,9 +16,11 @@
 <script>
     $(document).ready(function(){
         $('#ajaxToGet').click(function(){
+            var lat = document.getElementById("LAT").value;
+            var lnt = document.getElementById("LNT").value;
             $.ajax({
                 type : "GET",
-                url : "${pageContext.request.contextPath}/getWIFI",
+                url : "${pageContext.request.contextPath}/getWIFI?LAT="+lat+"&LNT="+lnt,
                 success: function(data){
                     var d = JSON.parse(data);
                     var table = "";
