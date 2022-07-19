@@ -1,4 +1,4 @@
-package controller;
+package servlet;
 
 import com.google.gson.Gson;
 import db.Wifi;
@@ -17,8 +17,8 @@ import java.util.List;
 
 
 @WebServlet(name = "getWIFI", value = "/getWIFI")
-public class wifiController extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+public class GetWifiList extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WifiService wifiService = new WifiService();
         String LAT = req.getParameter("LAT");
         String LNT = req.getParameter("LNT");
