@@ -38,6 +38,7 @@ public class HistoryService {
 
             while(rs.next()){
                 History history = new History();
+                history.setId(Integer.parseInt(rs.getString("id")));
                 history.setLAT(rs.getString("lat"));
                 history.setLNT(rs.getString("lnt"));
                 history.setDate(sdf.format(rs.getTimestamp("registerDate")));
@@ -127,4 +128,58 @@ public class HistoryService {
             }
         }
     }
+    public int withdraw(int memberId){
+        int affected = 0;
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DriverManager.getConnection(url, dbUserId, dbPassword);
+            String sql = "delete from history " +
+                    " where id = ? ";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, String.valueOf(memberId));
+
+            affected = preparedStatement.executeUpdate();
+            if( affected > 0){
+                logger.info("삭제 성공");
+            }else{
+                logger.severe("삭제 실패");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try {
+                if(rs != null && !rs.isClosed()){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if(preparedStatement != null && !preparedStatement.isClosed()){
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if(connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return affected;
+    }
+
 }
