@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,8 +30,14 @@ public class GetWifiList extends HttpServlet {
         HistoryService historyService = new HistoryService();
         historyService.save(map);
 
-        List<Wifi> wifilist = wifiService.list();
-
+        List<Wifi> wifilist = wifiService.list(map);
+        wifilist.sort(new Comparator<Wifi>() {
+            @Override
+            public int compare(Wifi o1, Wifi o2) {
+//                return Double.compare(o1.getKm()), Double.parseDouble(o2.getKm())) == 1 ? -1 : Double.compare(Double.parseDouble(o1.getKm()), Double.parseDouble(o2.getKm())) == 0 ? 0 : 1;
+                return Double.compare(o2.getKm(), o1.getKm()) == 1 ? -1 : Double.compare(o2.getKm(), o1.getKm()) == 0 ? 0 : 1;
+            }
+        });
         Gson gson = new Gson();
 
         resp.setContentType("text/html; charset=UTF-8");
