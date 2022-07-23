@@ -3,20 +3,22 @@ package com.example.wifi;
 import com.google.gson.*;
 
 
-import db.MemberService;
 import db.Wifi;
-import db.WifiService;
+import service.WifiService;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "getWIFI", value = "/getWIFI")
+@WebServlet(name = "setWIFI", value = "/setWIFI")
 public class HelloServlet extends HttpServlet {
     private String message;
     private String url = "http://openapi.seoul.go.kr:8088/794f684f4b6b696e36304c486f4970/json/TbPublicWifiInfo";
@@ -26,11 +28,6 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //        // Hello
-//        out.println("<html><body>");
-//        out.println("<h1>" + message + "</h1>");
-//        out.println("</body></html>");
-
         response.setContentType("text/html; charset=utf-8");
         String getTotalCount = getWifiTotalCount(url);
         JsonObject json_totalCount = new Gson().fromJson(getTotalCount, JsonObject.class);
@@ -38,46 +35,12 @@ public class HelloServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.println("<h1>"+totalCount+"개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>");
-        setWifi();
-//        for(int i=1; i<(totalCount/10)+1; i++){
-//        for(int i=1; i<3; i++){
-//            JsonArray jsonArray = new Gson().fromJson(getWifiLow(String.valueOf(i)), JsonObject.class).getAsJsonObject("TbPublicWifiInfo").getAsJsonArray("row");
-//            for(JsonElement j : jsonArray){
-//                out.println(j.getAsJsonObject().get("X_SWIFI_MGR_NO")); // 관리번호
-//                out.println(j.getAsJsonObject().get("X_SWIFI_WRDOFC")); // 자치구
-//                out.println(j.getAsJsonObject().get("X_SWIFI_MAIN_NM")); // 와이파이명
-//                out.println(j.getAsJsonObject().get("X_SWIFI_ADRES1")); // 도로명주소
-//                out.println(j.getAsJsonObject().get("X_SWIFI_ADRES2")); // 상세주소
-//                out.println(j.getAsJsonObject().get("X_SWIFI_INSTL_FLOOR")); // 설치위치(층)
-//                out.println(j.getAsJsonObject().get("X_SWIFI_INSTL_TY")); // 설치유형
-//                out.println(j.getAsJsonObject().get("X_SWIFI_INSTL_MBY")); // 설치기관
-//                out.println(j.getAsJsonObject().get("X_SWIFI_SVC_SE")); // 서비스구분
-//                out.println(j.getAsJsonObject().get("X_SWIFI_CMCWR")); // 망종류
-//                out.println(j.getAsJsonObject().get("X_SWIFI_CNSTC_YEAR")); // 설치년도
-//                out.println(j.getAsJsonObject().get("X_SWIFI_INOUT_DOOR")); // 실내외구분
-//                out.println(j.getAsJsonObject().get("X_SWIFI_REMARS3")); // WIFI접속환경
-//                out.println(j.getAsJsonObject().get("LAT")); // X좌표
-//                out.println(j.getAsJsonObject().get("LNT")); // Y좌표
-//                out.println(j.getAsJsonObject().get("WORK_DTTM")); // 작업일자
-//            }
-//            out.println("<br/>");
-//        }
-
-//        Gson gson = new Gson();
-//
-//
-//        out.println("======");
-////            out.println(jsonObject.getAsJsonObject("TbPublicWifiInfo").getAsJsonObject("row").size());
-//        out.println("======");
-//
-//        JsonArray jsonArray = convertedObject.getAsJsonObject("TbPublicWifiInfo").getAsJsonArray("row");
-////
-//        for(JsonElement j :jsonArray){
-//            out.println(j.getAsJsonObject().get("X_SWIFI_WRDOFC"));
-//        }
-
-
-
+        out.println("<a href='./list.jsp'>홈으로 이동</a>");
+        try {
+            setWifi(totalCount);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void destroy() {
@@ -102,7 +65,7 @@ public class HelloServlet extends HttpServlet {
         String result = null;
         try{
             OkHttpClient client = new OkHttpClient();
-            url = url+"/"+startIdx+"/10/";
+            url = url+"/"+startIdx+"/100/";
             Request rq = new Request.Builder()
                     .url(url)
                     .build();
@@ -114,10 +77,10 @@ public class HelloServlet extends HttpServlet {
         return result;
     }
 
-    void setWifi(){
+    void setWifi(int totalCount) throws InterruptedException {
         List<Wifi> wifiList = new ArrayList<>();
-
-        for(int i=0; i<1; i++) {
+        WifiService wifiService = new WifiService();
+        for(int i=0; i < (totalCount/100)+1; i++) {
             JsonArray jsonArray = new Gson().fromJson(getWifiLow(String.valueOf(i)), JsonObject.class).getAsJsonObject("TbPublicWifiInfo").getAsJsonArray("row");
             for (JsonElement j : jsonArray) {
                 Wifi wifi = new Wifi();
@@ -140,9 +103,6 @@ public class HelloServlet extends HttpServlet {
                 wifiList.add(wifi);
             }
         }
-        WifiService wifiService = new WifiService();
         wifiService.register(wifiList);
-        System.out.println(wifiList.get(0).getX_SWIFI_ADRES1());
-        System.out.println(wifiList.size());
     }
 }
