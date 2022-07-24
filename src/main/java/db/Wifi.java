@@ -1,6 +1,7 @@
 package db;
 
 public class Wifi {
+    private double km;
     private String X_SWIFI_MGR_NO; // 관리번호
     private String X_SWIFI_WRDOFC; // 자치구
     private String X_SWIFI_MAIN_NM; // 와이파이명
@@ -144,5 +145,13 @@ public class Wifi {
 
     public void setWORK_DTTM(String WORK_DTTM) {
         this.WORK_DTTM = WORK_DTTM;
+    }
+
+    public double getKm() {
+        return km;
+    }
+
+    public void setKm(double km) {
+        this.km = km;
     }
 }

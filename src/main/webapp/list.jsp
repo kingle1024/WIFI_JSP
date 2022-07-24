@@ -3,10 +3,7 @@
 
 <%@ page import="db.Wifi" %>
 <%@ page import="service.WifiService" %>
-<%
-    WifiService wifiService = new WifiService();
-    List<Wifi> wifiList = wifiService.list();
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +25,7 @@
                     var lnt1 = document.getElementById("LNT").value;
                     for(key in d){
                         table += "<tr>" +
-                            "<td>"+distance(lat1, lnt1, d[key].LAT, d[key].LNT, "kilometer")+"</td>" +
+                            "<td>"+d[key].km+"</td>" +
                             "<td>"+d[key].X_SWIFI_MGR_NO+"</td>" +
                             "<td>"+d[key].X_SWIFI_WRDOFC+"</td>" +
                             "<td>"+d[key].X_SWIFI_MAIN_NM+"</td>" +
@@ -124,7 +121,7 @@
 <h1>와이파이 정보 구하기
 </h1>
 <br/>
-<a href="#">홈</a> | <a href="#">위치 히스토리 목록</a> | <a href="/getWIFI">Open API 와이파이 정보 가져오기</a><br/>
+<a href="#">홈</a> | <a href="./detail.jsp">위치 히스토리 목록</a> | <a href="./setWIFI">Open API 와이파이 정보 가져오기</a><br/>
 LAT: <input type="text" id="LAT">, LNT: <input type="text" id="LNT"> <button onclick="getLocation()">내 위치 가져오기</button><button id="ajaxToGet">근처 WIFI 정보 보기</button>
 <table id="wifiData">
     <thead>
@@ -149,13 +146,11 @@ LAT: <input type="text" id="LAT">, LNT: <input type="text" id="LNT"> <button onc
     </tr>
     </thead>
     <tbody id="resultBody">
-<%--        <% if(wifiList == null) { %>--%>
-<%--        <tr>--%>
-<%--        <td>--%>
-<%--        위치 정보를 입력한 후에 조회해 주세요.--%>
-<%--        </td>--%>
-<%--        </tr>--%>
-<%--        <%} else{  %>--%>
+    <tr>
+        <td>
+        위치 정보를 입력한 후에 조회해 주세요.
+        </td>
+    </tr>
 
 <%--        <% for(Wifi wifi: wifiList){ %>--%>
 
