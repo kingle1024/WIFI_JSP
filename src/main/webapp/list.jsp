@@ -10,6 +10,13 @@
     <title>와이파이 정보 구하기</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<style>
+    .table thead th{
+        background-color : #32b584;
+        color : white;
+    }
+</style>
 <script>
     $(document).ready(function(){
         $('#ajaxToGet').click(function(){
@@ -19,6 +26,7 @@
                 alert("위치 정보를 입력해주세요.");
                 return;
             }
+            $('tbody tr').eq(0).remove();
             $.ajax({
                 type : "GET",
                 url : "${pageContext.request.contextPath}/getWIFI?LAT="+lat+"&LNT="+lnt,
@@ -41,8 +49,8 @@
                             "<td>"+d[key].X_SWIFI_CNSTC_YEAR+"</td>" +
                             "<td>"+d[key].X_SWIFI_INOUT_DOOR+"</td>" +
                             "<td>"+d[key].X_SWIFI_REMARS3+"</td>" +
-                            "<td>"+d[key].LAT+"</td>" +
                             "<td>"+d[key].LNT+"</td>" +
+                            "<td>"+d[key].LAT+"</td>" +
                             "<td>"+d[key].WORK_DTTM+"</td>" +
                             "</tr>";
                     }
@@ -133,32 +141,32 @@
     <button onclick="getLocation()">내 위치 가져오기</button>
     <button id="ajaxToGet">근처 WIFI 정보 보기</button>
 
-<table id="wifiData">
+<table id="wifiData" class="table table-striped">
     <thead>
     <tr>
-        <td>거리(Km)</td>
-        <td>관리번호</td>
-        <td>자치구</td>
-        <td>와이파이명</td>
-        <td>도로명주소</td>
-        <td>상세주소</td>
-        <td>설치위치(층)</td>
-        <td>설치유형</td>
-        <td>설치기관</td>
-        <td>서비스구분</td>
-        <td>망종류</td>
-        <td>설치년도</td>
-        <td>실내외구분</td>
-        <td>WIFI접속환경</td>
-        <td>X좌표</td>
-        <td>Y좌표</td>
-        <td>작업일</td>
+        <th scope="col">거리(Km)</th>
+        <th scope="col">관리번호</th>
+        <th scope="col">자치구</th>
+        <th scope="col">와이파이명</th>
+        <th scope="col">도로명주소</th>
+        <th scope="col">상세주소</th>
+        <th scope="col">설치위치(층)</th>
+        <th scope="col">설치유형</th>
+        <th scope="col">설치기관</th>
+        <th scope="col">서비스구분</th>
+        <th scope="col">망종류</th>
+        <th scope="col">설치년도</th>
+        <th scope="col">실내외구분</th>
+        <th scope="col">WIFI접속환경</th>
+        <th scope="col">X좌표</th>
+        <th scope="col">Y좌표</th>
+        <th scope="col">작업일</th>
     </tr>
     </thead>
     <tbody id="resultBody">
     <tr>
-        <td>
-        위치 정보를 입력한 후에 조회해 주세요.
+        <td colspan="17">
+            <center>위치 정보를 입력한 후에 조회해 주세요.</center>
         </td>
     </tr>
     </tbody>
