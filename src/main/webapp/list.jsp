@@ -15,14 +15,16 @@
         $('#ajaxToGet').click(function(){
             var lat = document.getElementById("LAT").value;
             var lnt = document.getElementById("LNT").value;
+            if(lat === "" || lnt === ""){
+                alert("위치 정보를 입력해주세요.");
+                return;
+            }
             $.ajax({
                 type : "GET",
                 url : "${pageContext.request.contextPath}/getWIFI?LAT="+lat+"&LNT="+lnt,
                 success: function(data){
                     var d = JSON.parse(data);
                     var table = "";
-                    var lat1 = document.getElementById("LAT").value;
-                    var lnt1 = document.getElementById("LNT").value;
                     for(key in d){
                         table += "<tr>" +
                             "<td>"+d[key].km+"</td>" +
@@ -69,9 +71,9 @@
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
 
-        if (unit == "kilometer") {
+        if (unit === "kilometer") {
             dist = dist * 1.609344;
-        } else if(unit == "meter"){
+        } else if(unit === "meter"){
             dist = dist * 1609.344;
         }
 
@@ -121,8 +123,16 @@
 <h1>와이파이 정보 구하기
 </h1>
 <br/>
-<a href="#">홈</a> | <a href="./detail.jsp">위치 히스토리 목록</a> | <a href="./setWIFI">Open API 와이파이 정보 가져오기</a><br/>
-LAT: <input type="text" id="LAT">, LNT: <input type="text" id="LNT"> <button onclick="getLocation()">내 위치 가져오기</button><button id="ajaxToGet">근처 WIFI 정보 보기</button>
+    <a href="#">홈</a> |
+    <a href="./detail.jsp">위치 히스토리 목록</a> |
+    <a href="./setWIFI">Open API 와이파이 정보 가져오기</a>
+<br/>
+
+<label>LAT: <input type="text" id="LAT" ></label>
+<label>, LNT: <input type="text" id="LNT"></label>
+    <button onclick="getLocation()">내 위치 가져오기</button>
+    <button id="ajaxToGet">근처 WIFI 정보 보기</button>
+
 <table id="wifiData">
     <thead>
     <tr>
@@ -151,66 +161,7 @@ LAT: <input type="text" id="LAT">, LNT: <input type="text" id="LNT"> <button onc
         위치 정보를 입력한 후에 조회해 주세요.
         </td>
     </tr>
-
-<%--        <% for(Wifi wifi: wifiList){ %>--%>
-
-<%--        <tr>--%>
-<%--            <td><script>check(<%=wifi.getLAT()%>)</script></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_MGR_NO()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_WRDOFC()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_MAIN_NM()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_ADRES1()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_ADRES2()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_INSTL_FLOOR()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_INSTL_TY()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_INSTL_MBY()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_SVC_SE()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_CMCWR()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_CNSTC_YEAR()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_INOUT_DOOR()%></td>--%>
-<%--            <td><%=wifi.getX_SWIFI_REMARS3()%></td>--%>
-<%--            <td><%=wifi.getLAT()%></td>--%>
-<%--            <td><%=wifi.getLNT()%></td>--%>
-<%--            <td><%=wifi.getWORK_DTTM()%></td>--%>
-<%--        </tr>--%>
-<%--        <% } %>--%>
-
-<%--        <%}%>--%>
-<%--    </tr>--%>
     </tbody>
-
 </table>
-
-
-
-
-
-<%--<%--%>
-<%--    out.write("hi");--%>
-<%--    MemberService memberService = new MemberService();--%>
-<%--    List<Member> memberList = memberService.list();--%>
-<%--    out.write(memberList.size());--%>
-<%--%>--%>
-<%--    <table>--%>
-<%--    <%--%>
-<%--    for(Member member: memberList){--%>
-<%--    %>--%>
-<%--    <tbody>--%>
-<%--    <tr>--%>
-<%--        <td><%=member.getMemberType()%> </td>--%>
-<%--        <td>--%>
-<%--            <a href="detail.jsp?memberType=<%=member.getMemberType()%>&userId=<%=member.getUserId()%>">--%>
-<%--                <%=member.getUserId()%>--%>
-<%--            </a>--%>
-<%--        </td>--%>
-<%--        <td><%=member.getPassword()%></td>--%>
-<%--        <td><%=member.getName()%></td>--%>
-<%--    </tr>--%>
-<%--    </tbody>--%>
-<%--    <%--%>
-<%--    }--%>
-<%--    %>--%>
-<%--    </table>--%>
-
 </body>
 </html>
