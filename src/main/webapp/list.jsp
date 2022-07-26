@@ -26,11 +26,11 @@
                 alert("위치 정보를 입력해주세요.");
                 return;
             }
-            $('tbody tr').eq(0).remove();
             $.ajax({
                 type : "GET",
                 url : "${pageContext.request.contextPath}/getWIFI?LAT="+lat+"&LNT="+lnt,
                 success: function(data){
+                    $('tbody tr').eq(0).remove();
                     var d = JSON.parse(data);
                     var table = "";
                     for(key in d){
@@ -58,8 +58,8 @@
                     document.getElementById("resultBody").innerHTML += table;
                 },
                 error : function(request, status, error){
-                    console.log('code+request.status'+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-                    // alert('code+request.status'+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+                    console.log('code request.status'+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+                    alert('와이파이 정보가 없습니다.')
                 }
             });
         });
@@ -128,10 +128,9 @@
 
 </script>
 <body>
-<h1>와이파이 정보 구하기
-</h1>
+<h1>와이파이 정보 구하기</h1>
 <br/>
-    <a href="#">홈</a> |
+    <a href="./list.jsp">홈</a> |
     <a href="./detail.jsp">위치 히스토리 목록</a> |
     <a href="./setWIFI">Open API 와이파이 정보 가져오기</a>
 <br/>
