@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class WifiService {
-    private String url = "jdbc:mariadb://localhost:3306/wifi";
-    private String dbUserId = "root";
-    private String dbPassword = "1234";
-    private static Logger logger = Logger.getLogger(WifiService.class.getName());
+    private final String url = "jdbc:mariadb://localhost:3306/wifi";
+    private final String dbUserId = "root";
+    private final String dbPassword = "1234";
+    private static final Logger logger = Logger.getLogger(WifiService.class.getName());
     public List<Wifi> list(HashMap<String, String> map){
         List<Wifi> wifiList = new ArrayList<>();
 
@@ -93,9 +93,9 @@ public class WifiService {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
 
-        if (unit == "kilometer") {
+        if (unit.equals("kilometer")) {
             dist = dist * 1.609344;
-        } else if(unit == "meter"){
+        } else if(unit.equals("meter")){
             dist = dist * 1609.344;
         }
 
@@ -118,9 +118,9 @@ public class WifiService {
 //        connection.setAutoCommit(false);
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
-            for(int i=0; i<wifiList.size(); i++) {
+            for (Wifi value : wifiList) {
                 Wifi wifi = new Wifi();
-                wifi = wifiList.get(i);
+                wifi = value;
                 String sql = "insert into data(X_SWIFI_MGR_NO, X_SWIFI_WRDOFC, X_SWIFI_MAIN_NM, X_SWIFI_ADRES1, X_SWIFI_ADRES2," +
                         " X_SWIFI_INSTL_FLOOR, X_SWIFI_INSTL_TY, X_SWIFI_INSTL_MBY, X_SWIFI_SVC_SE, X_SWIFI_CMCWR, " +
                         "X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, X_SWIFI_REMARS3, LAT, LNT, WORK_DTTM)" +
@@ -147,31 +147,26 @@ public class WifiService {
                 int affected = preparedStatement.executeUpdate();
 //                connection.commit();
                 if (affected > 0) {
-                    System.out.println("저장 성공");
+                    logger.info("저장 성공");
                 } else {
-                    System.out.println("저장 실패");
+                    logger.severe("저장 실패");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("runtime err :"+e);
             throw new RuntimeException(e);
         }finally{
             try {
                 if(preparedStatement != null && !preparedStatement.isClosed()){
-                    System.out.println("prepared close");
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
-                System.out.println("pre err" + e);
                 throw new RuntimeException(e);
             }
             try {
                 if(connection != null && !connection.isClosed()){
-                    System.out.println("connected close");
                     connection.close();
                 }
             } catch (SQLException e) {
-                System.out.println("conn err " +e);
                 throw new RuntimeException(e);
             }
         }

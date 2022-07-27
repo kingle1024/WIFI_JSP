@@ -1,10 +1,14 @@
 package db;
 
+import servlet.SaveWifiList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MemberService {
+    private static final Logger logger = Logger.getLogger(MemberService.class.getName());
 
     public List<Member> list(){
         /**
@@ -221,9 +225,9 @@ public class MemberService {
 
             int affected = preparedStatement.executeUpdate();
             if( affected > 0){
-                System.out.println("저장 성공");
+                logger.info("저장 성공");
             }else{
-                System.out.println("저장 실");
+                logger.severe("저장 실패");
             }
 
         } catch (SQLException e) {
@@ -285,9 +289,9 @@ public class MemberService {
 
             int affected = preparedStatement.executeUpdate();
             if( affected > 0){
-                System.out.println("수정 성공");
+                logger.info("수정 성공");
             }else{
-                System.out.println("수정 실패");
+                logger.severe("수정 실패");
             }
 
         } catch (SQLException e) {
@@ -344,9 +348,9 @@ public class MemberService {
 
             int affected = preparedStatement.executeUpdate();
             if( affected > 0){
-                System.out.println("삭제 성공");
+                logger.info("삭제 성공");
             }else{
-                System.out.println("삭제 실패");
+                logger.severe("삭제 실패");
             }
 
         } catch (SQLException e) {
