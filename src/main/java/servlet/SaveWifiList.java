@@ -1,4 +1,4 @@
-package com.example.wifi;
+package servlet;
 
 import com.google.gson.*;
 
@@ -10,21 +10,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "setWIFI", value = "/setWIFI")
-public class HelloServlet extends HttpServlet {
-    private String message;
+public class SaveWifiList extends HttpServlet {
     private String url = "http://openapi.seoul.go.kr:8088/794f684f4b6b696e36304c486f4970/json/TbPublicWifiInfo";
 
     public void init() {
-        message = "Hello World!";
+        String message = "Hello World!";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,11 +29,11 @@ public class HelloServlet extends HttpServlet {
         JsonObject json_totalCount = new Gson().fromJson(getTotalCount, JsonObject.class);
         int totalCount = Integer.parseInt(json_totalCount.getAsJsonObject("TbPublicWifiInfo").get("list_total_count").toString());
 
-        PrintWriter out = response.getWriter();
-        out.println("<h1>"+totalCount+"개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>");
-        out.println("<a href='./list.jsp'>홈으로 이동</a>");
         try {
-            setWifi(totalCount);
+            int resultCount = setWifi(totalCount);
+            PrintWriter out = response.getWriter();
+            out.println("<center><h1>"+resultCount+"개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>");
+            out.println("<a href='./list.jsp'>홈 으로 가기</a></center>");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +50,9 @@ public class HelloServlet extends HttpServlet {
                     .url(url)
                     .build();
             Response rs = client.newCall(rq).execute();
-            result = rs.body().string();
+            if (rs.body() != null) {
+                result = rs.body().string();
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -70,14 +68,16 @@ public class HelloServlet extends HttpServlet {
                     .url(url)
                     .build();
             Response rs = client.newCall(rq).execute();
-            result = rs.body().string();
+            if (rs.body() != null) {
+                result = rs.body().string();
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    void setWifi(int totalCount) throws InterruptedException {
+    int setWifi(int totalCount) throws InterruptedException {
         List<Wifi> wifiList = new ArrayList<>();
         WifiService wifiService = new WifiService();
         for(int i=0; i < (totalCount/100)+1; i++) {
@@ -104,5 +104,6 @@ public class HelloServlet extends HttpServlet {
             }
         }
         wifiService.register(wifiList);
+        return wifiList.size();
     }
 }
