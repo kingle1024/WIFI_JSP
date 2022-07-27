@@ -128,22 +128,22 @@ public class WifiService {
                         " ?, ?, ?, ?, ?," +
                         " ?, ?, ?, ?, ?, ?); ";
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, wifi.getX_SWIFI_MGR_NO());
-                preparedStatement.setString(2, wifi.getX_SWIFI_WRDOFC());
-                preparedStatement.setString(3, wifi.getX_SWIFI_MAIN_NM());
-                preparedStatement.setString(4, wifi.getX_SWIFI_ADRES1());
-                preparedStatement.setString(5, wifi.getX_SWIFI_ADRES2());
-                preparedStatement.setString(6, wifi.getX_SWIFI_INSTL_FLOOR());
-                preparedStatement.setString(7, wifi.getX_SWIFI_INSTL_TY());
-                preparedStatement.setString(8, wifi.getX_SWIFI_INSTL_MBY());
-                preparedStatement.setString(9, wifi.getX_SWIFI_SVC_SE());
-                preparedStatement.setString(10, wifi.getX_SWIFI_CMCWR());
-                preparedStatement.setString(11, wifi.getX_SWIFI_CNSTC_YEAR());
-                preparedStatement.setString(12, wifi.getX_SWIFI_INOUT_DOOR());
-                preparedStatement.setString(13, wifi.getX_SWIFI_REMARS3());
+                preparedStatement.setString(1, wifi.getX_SWIFI_MGR_NO().replace("\"", ""));
+                preparedStatement.setString(2, wifi.getX_SWIFI_WRDOFC().replace("\"", ""));
+                preparedStatement.setString(3, wifi.getX_SWIFI_MAIN_NM().replace("\"", ""));
+                preparedStatement.setString(4, wifi.getX_SWIFI_ADRES1().replace("\"", ""));
+                preparedStatement.setString(5, wifi.getX_SWIFI_ADRES2().replace("\"", ""));
+                preparedStatement.setString(6, wifi.getX_SWIFI_INSTL_FLOOR().replace("\"", ""));
+                preparedStatement.setString(7, wifi.getX_SWIFI_INSTL_TY().replace("\"", ""));
+                preparedStatement.setString(8, wifi.getX_SWIFI_INSTL_MBY().replace("\"", ""));
+                preparedStatement.setString(9, wifi.getX_SWIFI_SVC_SE().replace("\"", ""));
+                preparedStatement.setString(10, wifi.getX_SWIFI_CMCWR().replace("\"", ""));
+                preparedStatement.setString(11, wifi.getX_SWIFI_CNSTC_YEAR().replace("\"", ""));
+                preparedStatement.setString(12, wifi.getX_SWIFI_INOUT_DOOR().replace("\"", ""));
+                preparedStatement.setString(13, wifi.getX_SWIFI_REMARS3().replace("\"", ""));
                 preparedStatement.setString(14, wifi.getLAT().replace("\"", ""));
                 preparedStatement.setString(15, wifi.getLNT().replace("\"", ""));
-                preparedStatement.setString(16, wifi.getWORK_DTTM());
+                preparedStatement.setString(16, wifi.getWORK_DTTM().replace("\"", ""));
                 int affected = preparedStatement.executeUpdate();
 //                connection.commit();
                 if (affected > 0) {
