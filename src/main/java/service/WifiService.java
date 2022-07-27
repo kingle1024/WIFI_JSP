@@ -98,8 +98,7 @@ public class WifiService {
         } else if(unit.equals("meter")){
             dist = dist * 1609.344;
         }
-
-        return String.valueOf(dist);
+        return String.format("%.4f", dist);
     }
     static double deg2rad(double deg){
         return (deg * Math.PI / 180.0);
@@ -119,8 +118,6 @@ public class WifiService {
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
             for (Wifi value : wifiList) {
-                Wifi wifi = new Wifi();
-                wifi = value;
                 String sql = "insert into data(X_SWIFI_MGR_NO, X_SWIFI_WRDOFC, X_SWIFI_MAIN_NM, X_SWIFI_ADRES1, X_SWIFI_ADRES2," +
                         " X_SWIFI_INSTL_FLOOR, X_SWIFI_INSTL_TY, X_SWIFI_INSTL_MBY, X_SWIFI_SVC_SE, X_SWIFI_CMCWR, " +
                         "X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, X_SWIFI_REMARS3, LAT, LNT, WORK_DTTM)" +
@@ -128,22 +125,22 @@ public class WifiService {
                         " ?, ?, ?, ?, ?," +
                         " ?, ?, ?, ?, ?, ?); ";
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, wifi.getX_SWIFI_MGR_NO().replace("\"", ""));
-                preparedStatement.setString(2, wifi.getX_SWIFI_WRDOFC().replace("\"", ""));
-                preparedStatement.setString(3, wifi.getX_SWIFI_MAIN_NM().replace("\"", ""));
-                preparedStatement.setString(4, wifi.getX_SWIFI_ADRES1().replace("\"", ""));
-                preparedStatement.setString(5, wifi.getX_SWIFI_ADRES2().replace("\"", ""));
-                preparedStatement.setString(6, wifi.getX_SWIFI_INSTL_FLOOR().replace("\"", ""));
-                preparedStatement.setString(7, wifi.getX_SWIFI_INSTL_TY().replace("\"", ""));
-                preparedStatement.setString(8, wifi.getX_SWIFI_INSTL_MBY().replace("\"", ""));
-                preparedStatement.setString(9, wifi.getX_SWIFI_SVC_SE().replace("\"", ""));
-                preparedStatement.setString(10, wifi.getX_SWIFI_CMCWR().replace("\"", ""));
-                preparedStatement.setString(11, wifi.getX_SWIFI_CNSTC_YEAR().replace("\"", ""));
-                preparedStatement.setString(12, wifi.getX_SWIFI_INOUT_DOOR().replace("\"", ""));
-                preparedStatement.setString(13, wifi.getX_SWIFI_REMARS3().replace("\"", ""));
-                preparedStatement.setString(14, wifi.getLAT().replace("\"", ""));
-                preparedStatement.setString(15, wifi.getLNT().replace("\"", ""));
-                preparedStatement.setString(16, wifi.getWORK_DTTM().replace("\"", ""));
+                preparedStatement.setString(1, value.getX_SWIFI_MGR_NO().replace("\"", ""));
+                preparedStatement.setString(2, value.getX_SWIFI_WRDOFC().replace("\"", ""));
+                preparedStatement.setString(3, value.getX_SWIFI_MAIN_NM().replace("\"", ""));
+                preparedStatement.setString(4, value.getX_SWIFI_ADRES1().replace("\"", ""));
+                preparedStatement.setString(5, value.getX_SWIFI_ADRES2().replace("\"", ""));
+                preparedStatement.setString(6, value.getX_SWIFI_INSTL_FLOOR().replace("\"", ""));
+                preparedStatement.setString(7, value.getX_SWIFI_INSTL_TY().replace("\"", ""));
+                preparedStatement.setString(8, value.getX_SWIFI_INSTL_MBY().replace("\"", ""));
+                preparedStatement.setString(9, value.getX_SWIFI_SVC_SE().replace("\"", ""));
+                preparedStatement.setString(10, value.getX_SWIFI_CMCWR().replace("\"", ""));
+                preparedStatement.setString(11, value.getX_SWIFI_CNSTC_YEAR().replace("\"", ""));
+                preparedStatement.setString(12, value.getX_SWIFI_INOUT_DOOR().replace("\"", ""));
+                preparedStatement.setString(13, value.getX_SWIFI_REMARS3().replace("\"", ""));
+                preparedStatement.setString(14, value.getLAT().replace("\"", ""));
+                preparedStatement.setString(15, value.getLNT().replace("\"", ""));
+                preparedStatement.setString(16, value.getWORK_DTTM().replace("\"", ""));
                 int affected = preparedStatement.executeUpdate();
 //                connection.commit();
                 if (affected > 0) {
