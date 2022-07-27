@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
 
 <%@ page import="db.Wifi" %>
@@ -9,12 +9,43 @@
 <head>
     <title>와이파이 정보 구하기</title>
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<%--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>--%>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <style>
     .table thead th{
         background-color : #32b584;
         color : white;
+    }
+</style>
+<style>
+    #loading {
+        width: 100vw;
+        height: 40vw;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: block;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading-image {
+        position: absolute;
+        z-index: 100;
+        width:80vw;
+        height: 40vw;
+        margin-left:-40vw;
+    }
+    #loading {
+        height: 150vw;
+    }
+    #loading-image{
+        margin-top: 60pt;
+        height: 200pt;
+        width: 400pt;
     }
 </style>
 <script>
@@ -129,7 +160,7 @@
 </script>
 <body>
 <h1>와이파이 정보 구하기</h1>
-<jsp:include page="commonMenu.jsp" flush="false" />
+<jsp:include page="commonMenu.jsp"/>
 
 <label>LAT: <input type="text" id="LAT" ></label>
 <label>, LNT: <input type="text" id="LNT"></label>
@@ -161,10 +192,21 @@
     <tbody id="resultBody">
     <tr>
         <td colspan="17">
-            <center>위치 정보를 입력한 후에 조회해 주세요.</center>
+            <div style="text-align: center;">위치 정보를 입력한 후에 조회해 주세요.</div>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div id="loading">
+    <img id="loading-image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEwMjNfNjAg/MDAxNTQwMjg2OTk2NTcw.mfWKPtzKVO1mJaBBIFKIkVBlMQQIF1Vc-yrlbbGaoP0g.KNJWAgMmhsfQrZI3n0UT-LMi_qpHAZls4qPMvbNaJBcg.GIF.chingguhl/Spinner-1s-200px.gif?type=w800" alt="Loading..." />
+</div>
+
+<script type="text/javascript">
+    window.onbeforeunload = function () { $('#loading').show(); }  //현재 페이지에서 다른 페이지로 넘어갈 때 표시해주는 기능
+    $(window).load(function () {          //페이지가 로드 되면 로딩 화면을 없애주는 것
+        $('#loading').hide();
+    });
+</script>
 </body>
 </html>
