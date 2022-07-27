@@ -61,11 +61,7 @@
     int historySize = historyList.size();
 %>
     <h1>위치 히스토리 목록</h1>
-    <br/>
-    <a href="./list.jsp">홈</a> |
-    <a href="./detail.jsp">위치 히스토리 목록</a> |
-    <a href="./setWIFI">Open API 와이파이 정보 가져오기</a>
-    <br/>
+    <jsp:include page="commonMenu.jsp" flush="false" />
     <table class="table table-striped">
         <thead>
             <tr>

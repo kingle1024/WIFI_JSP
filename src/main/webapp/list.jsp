@@ -129,11 +129,7 @@
 </script>
 <body>
 <h1>와이파이 정보 구하기</h1>
-<br/>
-    <a href="./list.jsp">홈</a> |
-    <a href="./detail.jsp">위치 히스토리 목록</a> |
-    <a href="./setWIFI">Open API 와이파이 정보 가져오기</a>
-<br/>
+<jsp:include page="commonMenu.jsp" flush="false" />
 
 <label>LAT: <input type="text" id="LAT" ></label>
 <label>, LNT: <input type="text" id="LNT"></label>
