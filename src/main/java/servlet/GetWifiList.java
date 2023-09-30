@@ -5,7 +5,6 @@ import db.Wifi;
 import service.HistoryService;
 import service.WifiService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,6 @@ public class GetWifiList extends HttpServlet {
         wifilist.sort(new Comparator<Wifi>() {
             @Override
             public int compare(Wifi o1, Wifi o2) {
-//                return Double.compare(o1.getKm()), Double.parseDouble(o2.getKm())) == 1 ? -1 : Double.compare(Double.parseDouble(o1.getKm()), Double.parseDouble(o2.getKm())) == 0 ? 0 : 1;
                 return Double.compare(o2.getKm(), o1.getKm()) == 1 ? -1 : Double.compare(o2.getKm(), o1.getKm()) == 0 ? 0 : 1;
             }
         });

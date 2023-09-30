@@ -1,7 +1,6 @@
 package service;
 
 import db.History;
-import db.Member;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>위치 히스토리 목록</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -35,8 +35,7 @@
                 console.log("Code:"+request.status+" / Message:"+request.responseText+" / Error: "+error);
             },
             success: function(data){
-                //console.log(data);
-                if(data === 1){
+                if(data > 0){
                     window.alert("삭제가 완료되었습니다.");
                     document.location.reload(true);
                 }else{
@@ -84,10 +83,8 @@
                 <span class="glyphicon glyphicon-trash" style=" vertical-align: middle;">삭제</span>
                 </button>
             </td>
-
         </tr>
         <%}%>
-
         </tbody>
     </table>
 </body>

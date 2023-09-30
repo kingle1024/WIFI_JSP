@@ -37,7 +37,6 @@ public class WifiService {
                 Wifi wifi = new Wifi();
                 String LNT = String.valueOf(rs.getString("LNT")).replace("\"", "");
                 String LAT = String.valueOf(rs.getString("LAT")).replace("\"", "");
-//                wifi.setKm(distance(Double.parseDouble(map.get("LAT")), Double.parseDouble(map.get("LNT")), Double.parseDouble(LNT), Double.parseDouble(LAT), "kilometer"));
                 wifi.setKm(Double.parseDouble(distance(Double.parseDouble(map.get("LAT")), Double.parseDouble(map.get("LNT")), Double.parseDouble(LNT), Double.parseDouble(LAT), "kilometer")));
                 wifi.setX_SWIFI_MGR_NO(rs.getString("X_SWIFI_MGR_NO"));
                 wifi.setX_SWIFI_WRDOFC(rs.getString("X_SWIFI_WRDOFC"));
@@ -114,7 +113,6 @@ public class WifiService {
         }
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-//        connection.setAutoCommit(false);
         try {
             connection = DriverManager.getConnection(url, dbUserId, dbPassword);
             for (Wifi value : wifiList) {
@@ -142,7 +140,6 @@ public class WifiService {
                 preparedStatement.setString(15, value.getLNT().replace("\"", ""));
                 preparedStatement.setString(16, value.getWORK_DTTM().replace("\"", ""));
                 int affected = preparedStatement.executeUpdate();
-//                connection.commit();
                 if (affected > 0) {
                     logger.info("저장 성공");
                 } else {
